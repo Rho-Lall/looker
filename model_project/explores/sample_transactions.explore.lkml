@@ -1,0 +1,2 @@
+explore: sample_transactions {
+}

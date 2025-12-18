@@ -1,0 +1,68 @@
+# Looker Explore Builder Configuration
+# This file defines custom classification rules and formatting preferences
+
+# Custom field classifications
+# Override automatic detection by specifying fields in these lists
+classification:
+  # Fields that should have filter dimensions created
+  filters:
+- customer_id
+- region_code
+  
+  # Fields that should be treated as measures (even if they're strings)
+  measures:
+- transaction_count
+- avg_amount
+  
+  # Fields that should be treated as flags/booleans
+  flags:
+- is_processed
+- has_discount
+  
+  # Fields that should be treated as ID fields
+  ids:
+- external_ref
+- tracking_number
+  
+  # Override primary key detection (optional)
+  primary_key: transaction_id
+
+# Formatting rules for measures
+# Fields matching these patterns will get appropriate value_format
+formatting:
+  # Patterns for currency formatting ($#,##0.00)
+  currency_patterns:
+- revenue
+- cost
+- earning
+- amount
+- price
+- fee
+- charge
+  
+  # Patterns for percentage formatting (0.00%)
+  percentage_patterns:
+- rate
+- percent
+- pct
+- ratio
+  
+  # Patterns for count formatting (#,##0)
+  count_patterns:
+- count
+- total
+- num
+- quantity
+- qty
+
+# Ontology configuration for explore relationships
+ontology:
+project:
+  governance_status: in_development
+  name: sample_project
+relationships:
+- from: financial_transactions
+  relationship: many_to_one
+  to: customers
+  type: left_outer
+  via: ${financial_transactions.customer_id} = ${customers.id}
